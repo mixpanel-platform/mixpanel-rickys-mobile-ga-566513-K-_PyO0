@@ -6,30 +6,106 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
+    <div class="mixpanel-platform-section">
+      <div class="titles">
+        <h1 style="font-size: 18px; color: rgb(95,105,131)">Active Users Report</h1>
+        <h1 style="font-size: 16px; color: rgb(95,105,131); float: right;">Select Target Date Range</h1><br/>
+        <div style="clear: both;"></div>
+      </div>
+      
+      <div id="eventSelect" style="float: left;"></div>
+      
+      <div id="by" class="mixpanel-platform-label" style="margin-left: 10px; display: none;">by</div>
+      <div id="propSelect" style="float: left;"></div>
+      <div id="dateSelect" style="float: right;"></div><br/><br/><br/>
+      
+      
+      <div style="clear: both;"></div>
+      <div id="graph"></div>
+    </div>
+    <div id="table"></div>
     <script>
       MP.api.ready(function() {
-    var eventName = 'Game Played';
-    var $mau = MP.api.segment(eventName, 'mp_country_code', {
-        from: moment().subtract(10, 'months'),
-        to: moment(),
-        type: 'unique',
-        unit: 'month'
-    });
-
-    var $dau = MP.api.segment(eventName, 'mp_country_code', {
-        from: moment().subtract(30, 'days'),
-        to: moment(),
-        type: 'unique',
-        unit: 'day'
-    });
-
-    $.when($dau, $mau).done(function(dau, mau) {
-        $('<div></div>').appendTo('body').MPChart({
-            chartType: 'line',
-            data: dau.avg().divide(mau.avg())
+        
+        var eventSelect = $('#eventSelect').MPEventSelect();
+        var propSelect  = $('#propSelect').MPPropertySelect();
+        var dateSelect  = $('#dateSelect').MPDatepicker();
+        
+        var eventGraph  = $('#graph').MPChart({chartType: 'line'});
+        var eventTable  = $('#table').MPTable({
+          showPercentages: false,
         });
-    });
+        
+        
+        var runQuery = function() {
+          //obtain event, property, date range and type values
+          var eventName = eventSelect.MPEventSelect('value'),
+              propName  = propSelect.MPPropertySelect('value'),
+              dateRange = dateSelect.MPDatepicker('value');
+
+          //set parameters for multisegmentation API
+          if (eventName && propName) {
+            $('#graph').empty();
+            
+            var dauParams =  $.extend({}, dateRange, {
+              //'on': 'properties[\"' + propName + '\"]',
+              'type': 'unique',
+              'unit': 'day'
+            });
+            var mauParams =  $.extend({}, dateRange, {
+              //'on': 'properties[\"' + propName + '\"]',
+              'type': 'unique',
+              'unit': 'month'
+            });
+            
+            var $dau = MP.api.segment(eventName, propName, dauParams);
+            var $mau = MP.api.segment(eventName, propName, mauParams);
+            
+            // Wait till the segmentation queries finish
+            $.when($dau, $mau).done(function(dividend, divisor) {
+              console.log(dividend.values());
+              console.log(divisor.values());
+              var data = {};
+              // Set our divisor dates and report them backgrounds
+              var properties = _.keys(divisor.values())
+              var divisorDates = _.keys(divisor.values()[properties[0]]).sort().reverse()
+              /* Iterate through each divisor date to check whether it is greater
+                than the dividend. If so divide and store that data on the dividend
+                date. We loop backwards through the divisor to only divide dates
+                that are after our definition of a week
+              */
+              var divData = dividend.values()
+              _.each(properties, function(prop) {
+                data[prop] = {}
+                _.each(divisorDates, function(divisorDate) {
+                  _.each(_.keys(divData[prop]), function(divDate){
+                    if (divDate <= divisorDate) {
+                      denominator =  divisor.values()[prop][divisorDate];
+                      numerator = dividend.values()[prop][divDate];
+                      // Check for dividing by 0, in which case we do not include
+                      if (denominator != 0) {
+                        data[prop][divDate] =  numerator / denominator;
+                      }
+                    }
+                  });
+                });
+              });
+              console.log (data)
+              eventGraph.MPChart('setData', data);
+              eventTable.MPTable('setData', data);
+            });
+          };
+        };
+        //actions when dropdowns change
+        eventSelect.on('change', function(e, eventName) {
+          propSelect.MPPropertySelect('setEvent', eventName);
+          $("#by").show();
+          runQuery();
+        });
+        propSelect.on('change', runQuery);
+        dateSelect.on('change', runQuery);
       });
     </script>
+    
   </body>
 </html>
