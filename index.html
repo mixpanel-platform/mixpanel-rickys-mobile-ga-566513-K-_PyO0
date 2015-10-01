@@ -60,7 +60,8 @@
                 var sum = 0;
                 
                 _.each(_.keys(property), function(date){
-                  sum = sum + property[date];
+                  var values = property[date];
+                  sum = sum + values;
                   
                 console.log(sum);  
                 debugger;
