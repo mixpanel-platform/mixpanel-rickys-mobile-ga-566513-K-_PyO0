@@ -26,7 +26,6 @@
     <div id="table"></div>
     <script>
       MP.api.ready(function() {
-        
         var eventSelect = $('#eventSelect').MPEventSelect();
         var propSelect  = $('#propSelect').MPPropertySelect();
         var dateSelect  = $('#dateSelect').MPDatepicker();
@@ -35,7 +34,6 @@
         var eventTable  = $('#table').MPTable({
           showPercentages: false,
         });
-        
         
         var runQuery = function() {
           //obtain event, property, date range and type values
