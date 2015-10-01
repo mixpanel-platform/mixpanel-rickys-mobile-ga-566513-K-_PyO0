@@ -64,50 +64,17 @@
                 _.each(_.keys(json), function(date){
                   var values = json[date];
                   sum = sum + values;
+                });
                 
                 // Calculating DAU over MAU
                 _.each(_.keys(json), function(date){
                   var value = json[date];
                   output[property][date] = value/sum;
-                  
-              console.log(output)  
                 });
               });
-            });
-
-            // // Wait till the segmentation queries finish
-            // $.when($dau, $mau).done(function(dividend, divisor) {
-            //   console.log(dividend.values());
-            //   console.log(divisor.values());
-            //   var data = {};
-            //   // Set our divisor dates and report them backgrounds
-            //   var properties = _.keys(divisor.values())
-            //   var divisorDates = _.keys(divisor.values()[properties[0]]).sort().reverse()
-            //   /* Iterate through each divisor date to check whether it is greater
-            //     than the dividend. If so divide and store that data on the dividend
-            //     date. We loop backwards through the divisor to only divide dates
-            //     that are after our definition of a week
-            //   */
-            //   var divData = dividend.values()
-            //   _.each(properties, function(prop) {
-            //     data[prop] = {}
-            //     _.each(divisorDates, function(divisorDate) {
-            //       _.each(_.keys(divData[prop]), function(divDate){
-            //         if (divDate <= divisorDate) {
-            //           denominator =  divisor.values()[prop][divisorDate];
-            //           numerator = dividend.values()[prop][divDate];
-            //           // Check for dividing by 0, in which case we do not include
-            //           if (denominator != 0) {
-            //             data[prop][divDate] =  numerator / denominator;
-            //           }
-            //         }
-            //       });
-            //     });
-            //   });
-            //   console.log (data)
-            //   eventGraph.MPChart('setData', data);
-            //   eventTable.MPTable('setData', data);
-            // });
+                  
+              console.log(output)  
+              });
           };
         };
         //actions when dropdowns change
