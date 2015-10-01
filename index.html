@@ -52,17 +52,19 @@
             });
             
             MP.api.segment(eventName, params).done(function(results) {
-              var output = {}
+              var output = {};
               var query = results.values();
               
               _.each(_.keys(query), function(properties){
                 var property = query[properties]
+                var sum = 0;
                 
-                _.each(_.keys(property), function(dates){
-                  var date = property[dates]
+                _.each(_.keys(property), function(date){
+                  sum = sum + property[date];
                   
-                  debugger;
-                  
+                console.log(sum);  
+                debugger;
+
                   if (!output[propertiesTwo]) {
                     output[propertiesTwo] = {}
                   }
