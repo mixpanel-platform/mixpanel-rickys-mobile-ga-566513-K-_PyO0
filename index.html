@@ -45,11 +45,18 @@
           if (eventName && propName) {
             $('#graph').empty();
             
+            var params = $.extend({}, dateRange, {
+              'type': 'unique',
+              'unit': 'day',
+              'on': 'properties[\"' + propName + '\"]',
+              'event': eventName,
+            });
+            
             MP.api.segment(eventName, propName, dateRange, {
               //from: moment().subtract(30, 'days'),
               //to: moment().subtract(1, 'days'),
-              unit: 'day',
-              type: 'unique'
+              'unit': 'day',
+              'type': 'unique'
             }).done(function(results) {
               console.log(results.values());
               
