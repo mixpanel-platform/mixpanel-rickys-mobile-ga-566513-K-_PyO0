@@ -55,29 +55,22 @@
               var output = {};
               var query = results.values();
               
-              _.each(_.keys(query), function(properties){
-                var property = query[properties]
+              _.each(_.keys(query), function(property){
+                var json = query[property];
+                output[property] = {};
                 var sum = 0;
-                debugger;
                 
-                _.each(_.keys(property), function(date){
-                  var values = property[date];
+                // Calculating total MAU
+                _.each(_.keys(json), function(date){
+                  var values = json[date];
                   sum = sum + values;
-                  
-                  
-                  // if (!output[propertiesTwo]) {
-                  //   output[propertiesTwo] = {}
-                  // }
-                  // var propertyTwo = property[propertiesTwo]
-                  // var sum = 0;
                 
-                  // _.each(_.keys(propertyTwo), function(dates){
-                  //   sum = sum + propertyTwo[dates]
-                  // });
+                // Calculating DAU over MAU
+                _.each(_.keys(json), function(date){
+                  var value = json[date];
+                  output[property][date] = value/sum;
                   
-                  // output[propertiesTwo][properties] = sum;
-                  
-                    
+                console.log(output)  
                 });
               });
             });
