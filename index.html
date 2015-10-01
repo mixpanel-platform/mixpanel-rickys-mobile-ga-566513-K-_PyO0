@@ -58,6 +58,7 @@
               _.each(_.keys(query), function(properties){
                 var property = query[properties]
                 
+                debugger;
                 _.each(_.keys(property), function(propertiesTwo){
                   if (!output[propertiesTwo]) {
                     output[propertiesTwo] = {}
