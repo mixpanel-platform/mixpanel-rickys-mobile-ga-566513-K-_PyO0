@@ -1,15 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/css/reset.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.css">
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
     <script>
-      // Run queries and display results here
+      MP.api.ready(function() {
+    var eventName = 'Game Played';
+    var $mau = MP.api.segment(eventName, 'mp_country_code', {
+        from: moment().subtract(10, 'months'),
+        to: moment(),
+        type: 'unique',
+        unit: 'month'
+    });
+
+    var $dau = MP.api.segment(eventName, 'mp_country_code', {
+        from: moment().subtract(30, 'days'),
+        to: moment(),
+        type: 'unique',
+        unit: 'day'
+    });
+
+    $.when($dau, $mau).done(function(dau, mau) {
+        $('<div></div>').appendTo('body').MPChart({
+            chartType: 'line',
+            data: dau.avg().divide(mau.avg())
+        });
+    });
+      });
     </script>
   </body>
 </html>
