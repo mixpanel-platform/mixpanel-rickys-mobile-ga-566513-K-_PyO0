@@ -58,14 +58,13 @@
               _.each(_.keys(query), function(properties){
                 var property = query[properties]
                 var sum = 0;
-                
+                debugger;
                 _.each(_.keys(property), function(date){
                   var values = property[date];
                   sum = sum + values;
                   debugger;
                   
-                console.log(sum);  
-                debugger;
+                  console.log(sum);  
 
                   // if (!output[propertiesTwo]) {
                   //   output[propertiesTwo] = {}
