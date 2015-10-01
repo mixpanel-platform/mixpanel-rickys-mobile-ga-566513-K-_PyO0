@@ -52,16 +52,26 @@
             });
             
             MP.api.segment(eventName, params).done(function(results) {
-              console.log(results.values());
-              var data = results.values();
-              _.each(properties, function(prop) {
-                data[prop] = {}
-                _.each(divisorDates, function(divisorDate) {
-                  debugger;
-                  _.each(_.keys(divData[prop]), function(divDate){
+              var output = {}
+              var query = results.values();
+              
+              _.each(_.keys(query), function(properties){
+                var property = query[properties]
+                
+                _.each(_.keys(property), function(propertiesTwo){
+                  if (!output[propertiesTwo]) {
+                    output[propertiesTwo] = {}
+                  }
+                  var propertyTwo = property[propertiesTwo]
+                  var sum = 0;
+                
+                  _.each(_.keys(propertyTwo), function(dates){
+                    sum = sum + propertyTwo[dates]
+                  });
+                  
+                  output[propertiesTwo][properties] = sum;
                   
                     
-                  });
                 });
               });
             });
