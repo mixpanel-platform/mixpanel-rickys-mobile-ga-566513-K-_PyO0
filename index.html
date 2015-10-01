@@ -48,16 +48,17 @@
             var params = $.extend({}, dateRange, {
               'type': 'unique',
               'unit': 'day',
-              'on': 'properties[\"' + propName + '\"]',
-              'event': eventName,
+              'on': 'properties[\"' + propName + '\"]'
             });
             
-            MP.api.segment(eventName, propName, dateRange, {
+            MP.api.segment(eventName, params
+              //propName, dateRange, {
               //from: moment().subtract(30, 'days'),
               //to: moment().subtract(1, 'days'),
-              'unit': 'day',
-              'type': 'unique'
-            }).done(function(results) {
+              //'unit': 'day',
+              //'type': 'unique'
+            //}
+            ).done(function(results) {
               console.log(results.values());
               
               
