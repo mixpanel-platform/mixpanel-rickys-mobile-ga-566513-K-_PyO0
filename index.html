@@ -51,15 +51,22 @@
               'on': 'properties[\"' + propName + '\"]'
             });
             
-            MP.api.segment(eventName, params
-              //propName, dateRange, {
-              //from: moment().subtract(30, 'days'),
-              //to: moment().subtract(1, 'days'),
-              //'unit': 'day',
-              //'type': 'unique'
-            //}
-            ).done(function(results) {
+            MP.api.segment(eventName, params).done(function(results) {
               console.log(results.values());
+              var data = results.values();
+              _.each(properties, function(prop) {
+                data[prop] = {}
+                _.each(divisorDates, function(divisorDate) {
+                  debugger;
+                  _.each(_.keys(divData[prop]), function(divDate){
+                     if (divDate <= divisorDate) {
+                       denominator =  divisor.values()[prop][divisorDate];
+                       numerator = dividend.values()[prop][divDate];
+                       // Check for dividing by 0, in which case we do not include
+                       if (denominator != 0) {
+            //             data[prop][divDate] =  numerator / denominator;
+            //           }
+              
               
               
             });
