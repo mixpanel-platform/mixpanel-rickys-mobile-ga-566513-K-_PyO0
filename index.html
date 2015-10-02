@@ -87,7 +87,7 @@
               console.log(query);
               var sum = 0;
               _.each(_.keys(query), function(date){
-                var values = json[date];
+                var values = query[date];
                 sum = sum + values;
               }); 
               console.log(query.sum().values());
