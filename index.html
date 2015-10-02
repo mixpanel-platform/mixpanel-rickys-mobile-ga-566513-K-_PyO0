@@ -48,8 +48,6 @@
               propName  = propSelect.MPPropertySelect('value'),
               from_date = $('#slider').dateRangeSlider("values").min,
               to_date = $('#slider').dateRangeSlider("values").max;
-
-          console.log(moment(from_date).format('YYYY-MM-DD'));
               
           if (eventName) {
             $('#graph').empty();
@@ -90,8 +88,8 @@
             // Run if only event selected
             else {
               var params = $.extend({}, {
-                'from': from_date,
-                'to': to_date,
+                'from': moment(from_date).format('YYYY-MM-DD'),
+                'to':  moment(to_date).format('YYYY-MM-DD'),
                 'type': 'unique',
                 'unit': 'day',
               });
