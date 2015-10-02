@@ -47,7 +47,7 @@
               
             MP.api.segment(eventName, params).done(function(results) {
               console.log(results.values());
-            };
+            });
             
             
             
@@ -74,6 +74,10 @@
                     var values = json[date];
                     sum = sum + values;
                   });
+                  
+                  if (sum == 0){
+                    sum = 1;
+                  } 
                   
                   // Calculating DAU over MAU
                   _.each(_.keys(json), function(date){
