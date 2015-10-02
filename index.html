@@ -62,7 +62,7 @@
                   });
                   if (sum == 0){
                     sum = 1;
-                  } 
+                  }; 
                   // Calculating DAU over MAU
                   _.each(_.keys(json), function(date){
                     var value = json[date];
@@ -85,13 +85,24 @@
               var output = {};
               var query = results.values();
               console.log(query);
-                
+              var sum = 0;
+              _.each(_.keys(query), function(date){
+                var values = json[date];
+                sum = sum + values;
+              }); 
+              if (sum == 0){
+                sum = 1;
+              }; 
+              // Calculating DAU over MAU
+              _.each(_.keys(query), function(date){
+                var value = json[date];
+                output[date] = value/sum;
+              });
                
                     
-                //console.log(output)
-                //eventGraph.MPChart('setData', output);
+              console.log(output)
+              eventGraph.MPChart('setData', output);
                   
-              console.log(results.values());
             });
             };
           };
