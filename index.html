@@ -113,29 +113,47 @@
             } 
             // Run if only event selected
             else {
-              var params = $.extend({}, {
+              var dauParams = $.extend({}, {
                 'from': moment(from_date).format('YYYY-MM-DD'),
                 'to':  moment(to_date).format('YYYY-MM-DD'),
                 'type': 'unique',
                 'unit': 'day',
               });
-            // Segmentation query without property
-            MP.api.segment(eventName, params).done(function(results) {
-              var output = {};
-              var query = results.values()[eventName];
-              output[eventName] = {};
-              // Calculating MAU
-              var sum = results.sum().values()[eventName];
-              if (sum == 0) {sum = 1}; 
-              // Calculating DAU over MAU
-              _.each(_.keys(query), function(date){
-                var value = query[date];
-                output[eventName][date] = value/sum;
+              var mauParams = $.extend({}, {
+                'from': moment(from_date).format('YYYY-MM-DD'),
+                'to':  moment(to_date).format('YYYY-MM-DD'),
+                'interval': getInterval(date),
+                'type': 'unique',
               });
-              // Log and graph results
-              console.log(output)
-              eventGraph.MPChart('setData', output);
-            });
+              var $dau = MP.api.segment(eventName, dauParams);
+              var $mau = MP.api.segment(eventName, mauParams);
+              
+              // Wait until the segmentation queries finish
+              $.when($dau, $mau).done(function(dau, mau) {
+                var output = {};
+                var dauQuery = dau.values()[eventName];
+                var mauQuery = mau.values()[eventName];
+                output[eventName] = {};
+                
+                // Calculating MAU
+                var sum = 0;
+                _.each(_.keys(mauQuery), function(dates){
+                  var values = mauQuery[dates];
+                  sum = sum + values;
+                });
+                if (sum == 0) {sum = 1}; 
+                console.log(sum);
+                  
+                // Calculating DAU over MAU
+                _.each(_.keys(dauQuery), function(date){
+                  var value = dauQuery[date];
+                  output[eventName][date] = value/sum;
+                });
+                
+                // Log and graph results
+                console.log(output)
+                eventGraph.MPChart('setData', output);
+              });
             };
           };
         };
