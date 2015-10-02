@@ -84,26 +84,24 @@
             MP.api.segment(eventName, params).done(function(results) {
               var output = {};
               var query = results.values();
-              console.log(query);
+              
               var sum = 0;
               _.each(_.keys(query), function(date){
                 var values = query[date];
                 sum = sum + values;
               }); 
               console.log(results.sum().values());
-              console.log(sum);
+              
               if (sum == 0){
                 sum = 1;
               }; 
+              console.log(sum);
               // Calculating DAU over MAU
               _.each(_.keys(query), function(date){
                 var value = query[date];
                 output[date] = value/sum;
               });
-              
-              
-               
-                    
+    
               console.log(output)
               eventGraph.MPChart('setData', output);
                   
