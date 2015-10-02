@@ -18,7 +18,7 @@
         <div style="clear: both;"></div>
       </div>
       
-      <div id="slider"></div></br>
+      <div id="slider"></div><br></br>
       <div style="clear: both;"></div>
       
       <div id="eventSelect" style="float: left;"></div>
@@ -37,7 +37,7 @@
         var eventGraph  = $('#graph').MPChart({chartType: 'line'});
         $("#slider").dateRangeSlider({
           formatter:function(val){var days = val.getDate(), month = val.getMonth() + 1, year = val.getFullYear();
-            return month + "/" + days + "/" + year;}
+            return month + "/" + days + "/" + year;},
           bounds:{min: moment().subtract(365, 'days').toDate(),max: moment().toDate()},
           defaultValues:{min: moment().subtract(30, 'days').toDate(),max: moment().toDate()},
           range:{min: {days: 30},max: {days: 100}}
