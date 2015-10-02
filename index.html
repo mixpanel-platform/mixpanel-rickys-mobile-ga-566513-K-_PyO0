@@ -82,7 +82,7 @@
               });
               
             MP.api.segment(eventName, params).done(function(results) {
-              var output = {};
+              var output[eventName] = {};
               var query = results.values()[eventName];
               var sum = results.sum().values();
               
