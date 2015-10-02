@@ -49,13 +49,11 @@
               MP.api.segment(eventName, params).done(function(results) {
                 var output = {};
                 var query = results.values();
-                console.log(query);
-                
                 _.each(_.keys(query), function(property){
                   var json = query[property];
                   output[property] = {};
                   var sum = 0;
-                  // Calculating total MAU
+                  // Calculating MAU
                   _.each(_.keys(json), function(date){
                     var values = json[date];
                     sum = sum + values;
@@ -69,40 +67,29 @@
                     output[property][date] = value/sum;
                   });
                 });
-                    
+                // Log and graph results
                 console.log(output)
                 eventGraph.MPChart('setData', output);
                 });
             } 
-            // Segmentation query without property
+            // Run if only event selected
             else {
               var params = $.extend({}, dateRange, {
                 'type': 'unique',
                 'unit': 'day',
               });
-              
+            // Segmentation query without property
             MP.api.segment(eventName, params).done(function(results) {
               var output = {};
               var query = results.values()[eventName];
               output[eventName] = {};
-              var sum = results.sum().values();
+              var sum = results.sum().values()[eventName];
               
-              //var sum = 0;
-              // _.each(_.keys(query), function(date){
-              //   var values = query[date];
-              //   sum = sum + values;
-              // }); 
-              
-              //if (sum == 0){
-                //sum = 1;
-              //}; 
-              // Calculating DAU over MAU
               _.each(_.keys(query), function(date){
                 var value = query[date];
-                output[eventName][date] = value/sum[eventName];
+                output[eventName][date] = value/sum;
               });
               
-              debugger;
               console.log(output)
               eventGraph.MPChart('setData', output);
                   
