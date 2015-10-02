@@ -50,13 +50,15 @@
               to_date = $('#slider').dateRangeSlider("values").max;
               moment(testDate).format('MM/DD/YYYY');
               
+          console.log(moment(from_date).format('YYYY-MM-DD'));
+              
           if (eventName) {
             $('#graph').empty();
             // Run if property selected
             if (propName) {
               var params = $.extend({}, {
                 'from': moment(from_date).format('YYYY-MM-DD'),
-                'to':  moment(to_date).format('YYYY-MM-DD'),,
+                'to':  moment(to_date).format('YYYY-MM-DD'),
                 'type': 'unique',
                 'unit': 'day',
                 'on': 'properties[\"' + propName + '\"]'
