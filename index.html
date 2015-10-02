@@ -36,9 +36,9 @@
         $("#slider").dateRangeSlider({
           formatter:function(val){var days = val.getDate(), month = val.getMonth() + 1, year = val.getFullYear();
             return month + "/" + days + "/" + year;},
-          bounds:{min: moment().subtract(365, 'days').toDate(),max: moment().toDate()},
+          bounds:{min: moment().subtract(182, 'days').toDate(),max: moment().toDate()},
           defaultValues:{min: moment().subtract(30, 'days').toDate(),max: moment().toDate()},
-          range:{min: {days: 30},max: {days: 200}}
+          range:{min: {days: 7},max: {days: 100}}
         });
         
         var runQuery = function() {
