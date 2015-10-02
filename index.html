@@ -54,6 +54,7 @@
             MP.api.segment(eventName, params).done(function(results) {
               var output = {};
               var query = results.values();
+              console.log(query);
               
               _.each(_.keys(query), function(property){
                 var json = query[property];
