@@ -85,13 +85,12 @@
               var output = {};
               var query = results.values()[eventName];
               output[eventName] = {};
-              var sum = results.sum().values();
+              //var sum = results.sum().values();
               
               var sum = 0;
               _.each(_.keys(query), function(date){
                 var values = query[date];
                 sum = sum + values;
-                console.log(sum);
               }); 
               console.log("MP: " + results.sum().values());
               
@@ -107,8 +106,8 @@
               });
               
               debugger;
-              //console.log(output)
-              //eventGraph.MPChart('setData', output);
+              console.log(output)
+              eventGraph.MPChart('setData', output);
                   
             });
             };
