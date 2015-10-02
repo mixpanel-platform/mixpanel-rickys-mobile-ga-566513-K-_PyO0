@@ -38,7 +38,7 @@
               dateRange = dateSelect.MPDatepicker('value');
 
           //set parameters for multisegmentation API
-          if (eventName && propName) {
+          if (eventName) {
             $('#graph').empty();
             var params = $.extend({}, dateRange, {
                 'type': 'unique',
