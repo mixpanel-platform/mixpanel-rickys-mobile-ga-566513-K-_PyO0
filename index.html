@@ -38,7 +38,6 @@
           defaultValues:{min: moment().subtract(30, 'days').toDate(),max: moment().toDate()},
           range:{min: {days: 30},max: {days: 100}}
         });
-        $("#slider").bind("valuesChanged", runQuery);
         
         var runQuery = function() {
           //obtain event, property, and date range 
@@ -118,6 +117,7 @@
           runQuery();
         });
         propSelect.on('change', runQuery);
+        $("#slider").bind("valuesChanged", runQuery);
       });
     </script>
     
