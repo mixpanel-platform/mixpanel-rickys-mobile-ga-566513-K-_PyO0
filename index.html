@@ -40,18 +40,6 @@
           //set parameters for multisegmentation API
           if (eventName) {
             $('#graph').empty();
-            var params = $.extend({}, dateRange, {
-                'type': 'unique',
-                'unit': 'day',
-              });
-              
-            MP.api.segment(eventName, params).done(function(results) {
-              console.log(results.values());
-            });
-            
-            
-            
-            
             if (propName) {
               var params = $.extend({}, dateRange, {
                 'type': 'unique',
@@ -89,6 +77,15 @@
                 console.log(output)
                 eventGraph.MPChart('setData', output);
                 });
+            } else {
+              var params = $.extend({}, dateRange, {
+                'type': 'unique',
+                'unit': 'day',
+              });
+              
+            MP.api.segment(eventName, params).done(function(results) {
+              console.log(results.values());
+            });
             };
           };
         };
