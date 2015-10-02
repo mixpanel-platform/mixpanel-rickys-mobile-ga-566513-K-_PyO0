@@ -33,7 +33,7 @@
         var eventSelect = $('#eventSelect').MPEventSelect();
         var propSelect  = $('#propSelect').MPPropertySelect();
         var eventGraph  = $('#graph').MPChart({chartType: 'line'});
-        var dateSelect  = $("#slider").dateRangeSlider({
+        $("#slider").dateRangeSlider({
           bounds:{min: moment().subtract(365, 'days').toDate(),max: moment().toDate()},
           defaultValues:{min: moment().subtract(30, 'days').toDate(),max: moment().toDate()},
           range:{min: {days: 30},max: {days: 100}}
