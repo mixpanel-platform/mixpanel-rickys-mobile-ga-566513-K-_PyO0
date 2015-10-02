@@ -90,6 +90,8 @@
                 var values = json[date];
                 sum = sum + values;
               }); 
+              console.log(query.sum().values());
+              console.log(sum);
               if (sum == 0){
                 sum = 1;
               }; 
@@ -98,6 +100,8 @@
                 var value = query[date];
                 output[date] = value/sum;
               });
+              
+              
                
                     
               console.log(output)
