@@ -28,25 +28,24 @@
         var eventSelect = $('#eventSelect').MPEventSelect();
         var propSelect  = $('#propSelect').MPPropertySelect();
         var dateSelect  = $('#dateSelect').MPDatepicker();
-        
         var eventGraph  = $('#graph').MPChart({chartType: 'line'});
         
         var runQuery = function() {
-          //obtain event, property, date range and type values
+          //obtain event, property, and date range 
           var eventName = eventSelect.MPEventSelect('value'),
               propName  = propSelect.MPPropertySelect('value'),
               dateRange = dateSelect.MPDatepicker('value');
 
-          //set parameters for multisegmentation API
           if (eventName) {
             $('#graph').empty();
+            // Run if property selected
             if (propName) {
               var params = $.extend({}, dateRange, {
                 'type': 'unique',
                 'unit': 'day',
                 'on': 'properties[\"' + propName + '\"]'
               });
-              
+              // Segmentation query with property
               MP.api.segment(eventName, params).done(function(results) {
                 var output = {};
                 var query = results.values();
@@ -56,17 +55,14 @@
                   var json = query[property];
                   output[property] = {};
                   var sum = 0;
-                  
                   // Calculating total MAU
                   _.each(_.keys(json), function(date){
                     var values = json[date];
                     sum = sum + values;
                   });
-                  
                   if (sum == 0){
                     sum = 1;
                   } 
-                  
                   // Calculating DAU over MAU
                   _.each(_.keys(json), function(date){
                     var value = json[date];
@@ -77,13 +73,24 @@
                 console.log(output)
                 eventGraph.MPChart('setData', output);
                 });
-            } else {
+            } 
+            // Segmentation query without property
+            else {
               var params = $.extend({}, dateRange, {
                 'type': 'unique',
                 'unit': 'day',
               });
               
             MP.api.segment(eventName, params).done(function(results) {
+              var output = {};
+              var query = results.values();
+              console.log(query);
+                
+               
+                    
+                //console.log(output)
+                //eventGraph.MPChart('setData', output);
+                  
               console.log(results.values());
             });
             };
