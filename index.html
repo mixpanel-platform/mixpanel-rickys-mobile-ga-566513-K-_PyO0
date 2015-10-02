@@ -83,6 +83,8 @@
                 var output = {};
                 var dauQuery = dau.values();
                 var mauQuery = mau.values();
+                console.log(mauQuery);
+                debugger;
                 
                 _.each(_.keys(dauQuery), function(property){
                   var json = dauQuery[property];
@@ -91,12 +93,13 @@
                   // Calculating MAU
                   var sum = 0;
                   var objToSum = mauQuery[property];
-                  debugger;
-                  _.each(_.keys(mauQuery), function(mauProperty){
-                    var values = json[date];
+                  _.each(_.keys(objToSum), function(dates){
+                    var values = objToSum[dates];
                     sum = sum + values;
-                  });
+                  )
                   if (sum == 0) {sum = 1}; 
+                  console.log(sum);
+                  
                   // Calculating DAU over MAU
                   _.each(_.keys(json), function(date){
                     var value = json[date];
