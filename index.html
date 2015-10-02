@@ -58,7 +58,7 @@
                     var values = json[date];
                     sum = sum + values;
                   });
-                  if (sum == 0){sum = 1}; 
+                  if (sum == 0) {sum = 1}; 
                   // Calculating DAU over MAU
                   _.each(_.keys(json), function(date){
                     var value = json[date];
@@ -81,16 +81,17 @@
               var output = {};
               var query = results.values()[eventName];
               output[eventName] = {};
+              // Calculating MAU
               var sum = results.sum().values()[eventName];
-              
+              if (sum == 0) {sum = 1}; 
+              // Calculating DAU over MAU
               _.each(_.keys(query), function(date){
                 var value = query[date];
                 output[eventName][date] = value/sum;
               });
-              
+              // Log and graph results
               console.log(output)
               eventGraph.MPChart('setData', output);
-                  
             });
             };
           };
