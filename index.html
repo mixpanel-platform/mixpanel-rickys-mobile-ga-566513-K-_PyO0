@@ -17,12 +17,11 @@
         <div style="clear: both;"></div>
       </div>
       
+      <div id="slider"></div>
       <div id="eventSelect" style="float: left;"></div>
       
       <div id="by" class="mixpanel-platform-label" style="margin-left: 10px; display: none;">by</div>
       <div id="propSelect" style="float: left;"></div>
-
-      <div id="slider"></div>
     
       
       <div style="clear: both;"></div>
@@ -33,11 +32,11 @@
         var eventSelect = $('#eventSelect').MPEventSelect();
         var propSelect  = $('#propSelect').MPPropertySelect();
         var eventGraph  = $('#graph').MPChart({chartType: 'line'});
-        // $("#slider").dateRangeSlider({
-        //   bounds:{min: moment().subtract(365, 'days').toDate(),max: moment().toDate()},
-        //   defaultValues:{min: moment().subtract(30, 'days').toDate(),max: moment().toDate()},
-        //   range:{min: {days: 30},max: {days: 100}}
-        // });
+        $("#slider").dateRangeSlider({
+          bounds:{min: moment().subtract(365, 'days').toDate(),max: moment().toDate()},
+          defaultValues:{min: moment().subtract(30, 'days').toDate(),max: moment().toDate()},
+          range:{min: {days: 30},max: {days: 100}}
+        });
         
         var runQuery = function() {
           //obtain event, property, and date range 
