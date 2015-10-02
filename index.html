@@ -74,7 +74,6 @@
                 'type': 'unique',
                 'on': 'properties[\"' + propName + '\"]'
               });
-              console.log(getInterval(date))
               var $dau = MP.api.segment(eventName, dauParams);
               var $mau = MP.api.segment(eventName, mauParams);
               
@@ -83,9 +82,7 @@
                 var output = {};
                 var dauQuery = dau.values();
                 var mauQuery = mau.values();
-                console.log(mauQuery);
-                debugger;
-                
+
                 _.each(_.keys(dauQuery), function(property){
                   var json = dauQuery[property];
                   output[property] = {};
@@ -98,8 +95,7 @@
                     sum = sum + values;
                   });
                   if (sum == 0) {sum = 1}; 
-                  console.log(sum);
-                  
+
                   // Calculating DAU over MAU
                   _.each(_.keys(json), function(date){
                     var value = json[date];
@@ -134,6 +130,8 @@
                 var dauQuery = dau.values()[eventName];
                 var mauQuery = mau.values()[eventName];
                 output[eventName] = {};
+                console.log(mauQuery)
+                debugger;
                 
                 // Calculating MAU
                 var sum = 0;
