@@ -23,7 +23,6 @@
       <div style="clear: both;"></div>
       <div id="graph"></div>
     </div>
-    <div id="table"></div>
     <script>
       MP.api.ready(function() {
         var eventSelect = $('#eventSelect').MPEventSelect();
@@ -31,9 +30,6 @@
         var dateSelect  = $('#dateSelect').MPDatepicker();
         
         var eventGraph  = $('#graph').MPChart({chartType: 'line'});
-        var eventTable  = $('#table').MPTable({
-          showPercentages: false,
-        });
         
         var runQuery = function() {
           //obtain event, property, date range and type values
@@ -76,7 +72,6 @@
                   
               console.log(output)
               eventGraph.MPChart('setData', output);
-              eventTable.MPTable('setData', output);
               });
           };
         };
